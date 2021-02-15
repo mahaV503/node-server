@@ -1,5 +1,5 @@
-const http = require("http");
-
+const express = require("express");
+const app = express();
 //console.log(serV)
 const status_code= {
     '100': 'Continue',
@@ -67,12 +67,13 @@ const status_code= {
     '511': 'Network Authentication Required'
 };
 
-const serVble = (incomingReq, outputMsg)=>{
+app.get('/',(incomingReq, outputMsg)=>{
     console.log(incomingReq.url.substr(1));
     const keyCode = incomingReq.url.substr(1);
-    outputMsg.end(keyCode+" is code for "+status_code[keyCode]+"\n");
-    
-};
+    //outputMsg.end(keyCode+" is code for "+status_code[keyCode]+"\n");
+    outputMsg.json(status_code);
+});
 
-const serV = http.createServer(serVble);
-serV.listen(80);
+app.listen(5000,()=>
+    console.log("server up at 5000 ")
+);
