@@ -67,11 +67,18 @@ const status_code= {
     '511': 'Network Authentication Required'
 };
 
-app.get('/',(incomingReq, outputMsg)=>{
+app.get('/*',(incomingReq, outputMsg)=>{
     console.log(incomingReq.url.substr(1));
     const keyCode = incomingReq.url.substr(1);
-    //outputMsg.end(keyCode+" is code for "+status_code[keyCode]+"\n");
-    outputMsg.json(status_code);
+    if(keyCode in status_code){
+
+        console.log(keyCode);
+        outputMsg.end(keyCode+" is code for "+status_code[keyCode]+"\n");
+    }else{
+        console.log("Error raised UNKNOWN CODE QUERY");
+        outputMsg.end("Can't find error code you're lookm for")
+    }
+    //outputMsg.json(status_code);
 });
 
 app.listen(5000,()=>
